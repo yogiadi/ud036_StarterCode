@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Fresh Tomatoes!</title>
+
+    <!-- Bootstrap 3 -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <style type="text/css" media="screen">
+        body {
+            padding-top: 80px;
+        }
+        #trailer .modal-dialog {
+            margin-top: 200px;
+            width: 640px;
+            height: 480px;
+        }
+        .hanging-close {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            z-index: 9001;
+        }
+        #trailer-video {
+            width: 100%;
+            height: 100%;
+        }
+        .video-tile {
+            margin-bottom: 20px;
+            padding-top: 20px;
+        }
+        .video-tile:hover {
+            background-color: #EEE;
+            cursor: pointer;
+        }
+        .scale-media {
+            padding-bottom: 56.25%;
+            position: relative;
+        }
+        .scale-media iframe {
+            border: none;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background-color: white;
+        }
+        /* To create card like structure on the page */
+        .card {
+        /* Add shadows to create the "card" effect */
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+
+        /* On mouse-over, add a deeper shadow */
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+    </style>
+    <script type="text/javascript" charset="utf-8">
+        // Pause the video when the modal is closed
+        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
+            // Remove the src so the player itself gets removed, as this is the only
+            // reliable way to ensure the video stops playing in IE
+            $("#trailer-video-container").empty();
+        });
+        // Start playing the video whenever the trailer modal is opened
+        $(document).on('click', '.video-tile', function (event) {
+            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
+              'id': 'trailer-video',
+              'type': 'text-html',
+              'src': sourceUrl,
+              'frameborder': 0
+            }));
+        });
+        // Animate in the videos when the page loads
+        $(document).ready(function () {
+          $('.video-tile').hide().first().show("fast", function showNext() {
+            $(this).next("div").show("fast", showNext);
+          });
+        });
+    </script>
+</head>
+
+  <body>
+    <!-- Trailer Video Modal -->
+    <div class="modal" id="trailer">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+          </a>
+          <div class="scale-media" id="trailer-video-container">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Page Content -->
+    <div class="container">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Fresh Tomatoes Trailers</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+        <div class="row" style="display:flex; flex-wrap: wrap;"><!-- Flex wrap to align cards correctly -->
+              <div class="col-md-12 col-lg-12">
+                <h2>Movie</h2>
+                </div>
+<div class="col-md-6 col-lg-4 video-tile text-center" data-trailer-youtube-id="yQ5U8suTUw0" data-toggle="modal" data-target="#trailer">
+    <div class="card">
+        <img src="http://paulmmartinblog.files.wordpress.com/2011/07/the_dark_knight_poster.jpg" width="100%" class="img-responsive"><!-- class img-responsive used to create responsive images -->
+        <div class="caption"><!--Adding storyline as caption-->
+            <h4>Dark Knight</h4>
+            <p>When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham,the Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 video-tile text-center" data-trailer-youtube-id="VSB4wGIdDwo" data-toggle="modal" data-target="#trailer">
+    <div class="card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeYgGK80L-LTaMQC404ryBlUdm1thV78oDpUF89MZ1ZLs75eaa0w" width="100%" class="img-responsive"><!-- class img-responsive used to create responsive images -->
+        <div class="caption"><!--Adding storyline as caption-->
+            <h4>Wonder woman</h4>
+            <p>Before she was Wonder Woman, she was Diana, princess of the Amazons, trained warrior. When a pilot crashes and tells of conflict in the outside world, she leaves home to fight a war, discovering her full powers and true destiny. </p>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 video-tile text-center" data-trailer-youtube-id="Lt-U_t2pUHI" data-toggle="modal" data-target="#trailer">
+    <div class="card">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3fEXk4BUBt2-l4nrxgRG8sE3y3rOEMwPSawb8CZSsdPN78CHylw" width="100%" class="img-responsive"><!-- class img-responsive used to create responsive images -->
+        <div class="caption"><!--Adding storyline as caption-->
+            <h4>Doctor Strange</h4>
+            <p>While on a journey of physical and spiritual healing, a brilliant neurosurgeon is drawn into the world of the mystic arts. </p>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 video-tile text-center" data-trailer-youtube-id="tmeOjFno6Do" data-toggle="modal" data-target="#trailer">
+    <div class="card">
+        <img src="http://www.designbolts.com/wp-content/uploads/2015/03/Avengers-Age-of-Ultron-Official-Wallpaper-HD2.jpg" width="100%" class="img-responsive"><!-- class img-responsive used to create responsive images -->
+        <div class="caption"><!--Adding storyline as caption-->
+            <h4>Avengers age of ultron</h4>
+            <p>When Tony Stark and Bruce Banner try to jump-start a dormant peacekeeping program called Ultron, things go horribly wrong and its up to Earths mightiest heroes to stop the villainous Ultron from enacting his terrible plan.</p>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 col-lg-12">
+                <h2>Tvshow</h2>
+                </div>
+<div class="col-md-6 col-lg-4 video-tile text-center" data-trailer-youtube-id="Yj0l7iGKh8g" data-toggle="modal" data-target="#trailer">
+    <div class="card">
+        <img src="http://www.impawards.com/tv/posters/flash_xlg.jpg" width="100%" class="img-responsive"><!-- class img-responsive used to create responsive images -->
+        <div class="caption"><!--Adding storyline as caption-->
+            <h4>The Flash</h4>
+            <p>After being struck by lightning, Barry Allen wakes up from his coma to discover hes been given the power of super speed, becoming the Flash, fighting crime in Central City.</p>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 video-tile text-center" data-trailer-youtube-id="ff-XiZzJLxw" data-toggle="modal" data-target="#trailer">
+    <div class="card">
+        <img src="https://s-media-cache-ak0.pinimg.com/736x/ce/6a/3b/ce6a3b18bd9dc4c5ecde9fefe7bddd06--elementary-tv-movie-posters.jpg" width="100%" class="img-responsive"><!-- class img-responsive used to create responsive images -->
+        <div class="caption"><!--Adding storyline as caption-->
+            <h4>Elementary</h4>
+            <p>A modern take on the cases of Sherlock Holmes, with the detective now living in New York City. </p>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 video-tile text-center" data-trailer-youtube-id="POfJZGqdjDM" data-toggle="modal" data-target="#trailer">
+    <div class="card">
+        <img src="https://s-media-cache-ak0.pinimg.com/originals/eb/a4/df/eba4df809a662b2f43a8b065903f5ddc.jpg" width="100%" class="img-responsive"><!-- class img-responsive used to create responsive images -->
+        <div class="caption"><!--Adding storyline as caption-->
+            <h4>Arrow</h4>
+            <p>Spoiled billionaire playboy Oliver Queen is missing and presumed dead when his yacht is lost at sea. He returns five years later a changed man, determined to clean up the city as a hooded vigilante armed with a bow. </p>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-6 col-lg-4 video-tile text-center" data-trailer-youtube-id="1Mlhnt0jMlg" data-toggle="modal" data-target="#trailer">
+    <div class="card">
+        <img src="http://images4.fanpop.com/image/photos/20000000/Game-of-Thrones-Poster-game-of-thrones-20026735-338-500.jpg" width="100%" class="img-responsive"><!-- class img-responsive used to create responsive images -->
+        <div class="caption"><!--Adding storyline as caption-->
+            <h4>Game of thrones</h4>
+            <p>Nine noble families fight for control over the mythical lands of Westeros, while a forgotten race returns after being dormant for thousands of years. </p>
+        </div>
+    </div>
+</div>
+
+          </div>
+    </div>
+  </body>
+</html>

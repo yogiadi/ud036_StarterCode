@@ -2,6 +2,7 @@ import webbrowser
 import os
 import re
 
+print ("Hello")
 # Styles and scripting for the page
 main_page_head = '''
 <!DOCTYPE html>
@@ -34,11 +35,11 @@ main_page_head = '''
             width: 100%;
             height: 100%;
         }
-        .video-tile {
+        .movie-tile {
             margin-bottom: 20px;
             padding-top: 20px;
         }
-        .video-tile:hover {
+        .movie-tile:hover {
             background-color: #EEE;
             cursor: pointer;
         }
@@ -55,7 +56,6 @@ main_page_head = '''
             top: 0;
             background-color: white;
         }
-        /* To create card like structure on the page */
         .card {
         /* Add shadows to create the "card" effect */
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -75,7 +75,7 @@ main_page_head = '''
             $("#trailer-video-container").empty();
         });
         // Start playing the video whenever the trailer modal is opened
-        $(document).on('click', '.video-tile', function (event) {
+        $(document).on('click', '.movie-tile', function (event) {
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
             var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
@@ -85,9 +85,9 @@ main_page_head = '''
               'frameborder': 0
             }));
         });
-        // Animate in the videos when the page loads
+        // Animate in the movies when the page loads
         $(document).ready(function () {
-          $('.video-tile').hide().first().show("fast", function showNext() {
+          $('.movie-tile').hide().first().show("fast", function showNext() {
             $(this).next("div").show("fast", showNext);
           });
         });
@@ -117,84 +117,58 @@ main_page_content = '''
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">Fresh Tomatoes Trailers</a>
+            <a class="navbar-brand" href="#">Fresh Tomatoes Movie Trailers</a>
           </div>
         </div>
       </div>
     </div>
     <div class="container">
-        <div class="row" style="display:flex; flex-wrap: wrap;"><!-- Flex wrap to align cards correctly -->
-              {video_tiles}
-          </div>
+      {movie_tiles}
     </div>
   </body>
 </html>
 '''
 
 
-# A single video entry html template
-video_tile_content = '''
-<div class="col-md-6 col-lg-4 video-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
+# A single movie entry html template
+movie_tile_content = '''
+<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
     <div class="card">
-        <img src="{poster_image_url}" width="100%" class="img-responsive"><!-- class img-responsive used to create responsive images -->
-        <div class="caption"><!--Adding storyline as caption-->
-            <h4>{video_title}</h4>
-            <p>{video_storyline}</p>
-        </div>
+        <img src="{poster_image_url}" width="100" height="100">
+        <h4>{movie_title}</h4>
     </div>
 </div>
 '''
 
 
-def create_video_tiles_content(videos):
+def create_movie_tiles_content(movies):
     # The HTML content for this section of the page
     content = ''
-    # Create a dictionary to store content per category
-    content_dict={}
-    # total_content to store the final layout
-    total_content=''
-    for video in videos:
+    for movie in movies:
         # Extract the youtube ID from the url
         youtube_id_match = re.search(
-            r'(?<=v=)[^&#]+', video.trailer_youtube_url)
+            r'(?<=v=)[^&#]+', movie.trailer_youtube_url)
         youtube_id_match = youtube_id_match or re.search(
-            r'(?<=be/)[^&#]+', video.trailer_youtube_url)
+            r'(?<=be/)[^&#]+', movie.trailer_youtube_url)
         trailer_youtube_id = (youtube_id_match.group(0) if youtube_id_match
                               else None)
 
-        # Store the tile for the video with its content filled in
-        content = video_tile_content.format(
-            video_title=video.title,
-            poster_image_url=video.poster_image_url,
-            trailer_youtube_id=trailer_youtube_id,
-            video_storyline=video.storyline
+        # Append the tile for the movie with its content filled in
+        content += movie_tile_content.format(
+            movie_title=movie.title,
+            poster_image_url=movie.poster_image_url,
+            trailer_youtube_id=trailer_youtube_id
         )
-        # Get category from class of the object
-        category=video.__class__.__name__
-        # Check if the key is already present in the dictionary
-        if category in content_dict.keys():
-            content_dict[category] += content
-        else:
-            content_dict[category] = content
-    # header to apply css to category 
-    header='''<div class="col-md-12 col-lg-12">
-                <h2>{category}</h2>
-                </div>'''
-    # loop through each category and store the final outcome in total_content
-    for category in content_dict.keys():
-        header_content=header.format(category=category)
-        content_dict[category]=header_content+content_dict[category]
-        total_content += content_dict[category]
-    return total_content
+    return content
 
 
-def open_videos_page(videos):
+def open_movies_page(movies):
     # Create or overwrite the output file
     output_file = open('fresh_tomatoes.html', 'w')
 
-    # Replace the video tiles placeholder generated content
+    # Replace the movie tiles placeholder generated content
     rendered_content = main_page_content.format(
-        video_tiles=create_video_tiles_content(videos))
+        movie_tiles=create_movie_tiles_content(movies))
 
     # Output the file
     output_file.write(main_page_head + rendered_content)
