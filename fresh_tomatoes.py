@@ -103,8 +103,8 @@ main_page_content = '''
     <div class="modal" id="trailer">
       <div class="modal-dialog">
         <div class="modal-content">
-          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
-            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">  # noqa
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>  # noqa
           </a>
           <div class="scale-media" id="trailer-video-container">
           </div>
@@ -136,7 +136,8 @@ main_page_content = '''
 video_tile_content = '''
 <div class="col-md-6 col-lg-4 video-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
     <div class="card">
-        <img src="{poster_image_url}" width="100%" class="img-responsive"><!-- class img-responsive used to create responsive images -->
+        <!-- class img-responsive used to create responsive images -->
+        <img src="{poster_image_url}" width="100%" class="img-responsive">
         <div class="caption"><!--Adding storyline as caption-->
             <h4>{video_title}</h4>
             <p>{video_storyline}</p>
@@ -150,9 +151,9 @@ def create_video_tiles_content(videos):
     # The HTML content for this section of the page
     content = ''
     # Create a dictionary to store content per category
-    content_dict={}
+    content_dict = {}
     # total_content to store the final layout
-    total_content=''
+    total_content = ''
     for video in videos:
         # Extract the youtube ID from the url
         youtube_id_match = re.search(
@@ -170,20 +171,20 @@ def create_video_tiles_content(videos):
             video_storyline=video.storyline
         )
         # Get category from class of the object
-        category=video.__class__.__name__
+        category = video.__class__.__name__
         # Check if the key is already present in the dictionary
         if category in content_dict.keys():
             content_dict[category] += content
         else:
             content_dict[category] = content
-    # header to apply css to category 
-    header='''<div class="col-md-12 col-lg-12">
+    # header to apply css to category
+    header = '''<div class="col-md-12 col-lg-12">
                 <h2>{category}</h2>
                 </div>'''
     # loop through each category and store the final outcome in total_content
     for category in content_dict.keys():
-        header_content=header.format(category=category)
-        content_dict[category]=header_content+content_dict[category]
+        header_content = header.format(category=category)
+        content_dict[category] = header_content+content_dict[category]
         total_content += content_dict[category]
     return total_content
 
