@@ -14,8 +14,12 @@ class Movie(Video):
 
 
 class Tvshow(Video):
+    # Function to set channel for Tvshow
+
     def setChannel(self, channel):
         self.channel = channel
+
+    # Function to set season for Tvshow
 
     def setSeason(self, season):
         self.season = season
